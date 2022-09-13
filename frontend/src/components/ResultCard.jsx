@@ -5,9 +5,8 @@ function ResultCard({ product }) {
     <div className="product" key={product.name}>
       <p className="primary-text">{product.primaryText}</p>
       <div className="overlap">
-
-      <img src={product.imageUrl} alt={product.name} />
-      <p className="info-headline">{product.headline}</p>
+        <img src={product.imageUrl} alt={product.name} />
+        <p className="info-headline">{product.headline}</p>
       </div>
       <p className="info-description">{product.description}</p>
       <div className="flex">

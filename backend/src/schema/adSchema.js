@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 
+// ads schema was modelled after the data in the sample spreadsheet
 const adsSchema = mongoose.Schema({
     companyId: {
         type: String,

@@ -29,7 +29,7 @@ function SearchBar({ setProducts }) {
     <form className="search-bar">
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Press enter to show all, or type a keyword to search"
         className="search-input"
         value={searchTerm}
         onChange={(event) => {
@@ -54,7 +54,7 @@ function SearchBar({ setProducts }) {
 function Products({ prod }) {
   // console.log(prod);
   return (
-    // show the results, it's in a grid 3 columns format
+    // show the results, it's in a responsive grid columns format
     <div className="products">
       {prod ? prod.map((product) => (
         <ResultCard product={product} />
@@ -64,7 +64,7 @@ function Products({ prod }) {
 }
 
 function App() {
-  // the app is simple and use of redux is not necessary
+  // the app is simple therefore use of redux is not necessary
   const [prod, setProducts] = useState([]);
   return (
     <div className="App">
