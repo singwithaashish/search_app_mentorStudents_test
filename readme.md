@@ -11,5 +11,5 @@
 - I used mongodb atlas for the database
 - I used react and css for the frontend
 
-## screenshots
+
 
