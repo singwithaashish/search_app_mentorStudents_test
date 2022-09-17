@@ -1,9 +1,11 @@
 const mongoose = require("mongoose")
+const Company = require("./companySchema")
 
 // ads schema was modelled after the data in the sample spreadsheet
 const adsSchema = mongoose.Schema({
     companyId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "company",
         required: true
     },
     primaryText: {
@@ -21,12 +23,12 @@ const adsSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    imageURL: {
+    imageUrl: {
         type: String,
         required: true
     },
 })
 
-const Ads = mongoose.model("ads", adsSchema)
+const Ads = mongoose.model("ads", adsSchema) 
 
 module.exports = Ads
