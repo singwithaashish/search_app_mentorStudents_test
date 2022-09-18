@@ -209,8 +209,7 @@ app.post("/post", async (req, res) => {
   //     return;
   // }
 
-  // search across ads and companies collections
-
+  // search the ads and then populate them with the companyId 
   const ads = await Ads.find({
     $or: [
       { primaryText: { $regex: str, $options: "i" } },
@@ -221,13 +220,16 @@ app.post("/post", async (req, res) => {
     .populate("companyId")
     .exec();
 
+
+    // search the company name and then wind back to the ads
+
   const cmp = await Ads.aggregate([
     {
       $lookup: {
         from: "companies", // collection name in db
         localField: "companyId",
         foreignField: "_id",
-        as: "companyId",
+        as: "company",
       },
     },
     {
@@ -240,9 +242,15 @@ app.post("/post", async (req, res) => {
     },
   ]);
 
-  if (!ads.includes(cmp) && cmp.length > 0) {
-    ads.push(cmp);
+  // console.log(cmp);
+
+  // if the keyword is found in the company and also in ads, then rerun the query to get the ads with that company
+  // else append the company to the ads array
+  if (cmp.length > 0) {
+    if (!ads.some((a) => a._id.equals(cmp[0]._id)) && cmp.length > 0) {
+      ads.push(cmp[0]);
+    }
   }
-  console.log(ads);
+  // console.log(ads);
   res.status(200).send(ads);
 });

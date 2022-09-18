@@ -56,8 +56,8 @@ function Products({ prod }) {
   return (
     // show the results, it's in a responsive grid columns format
     <div className="products">
-      {prod ? prod.map((product) => (
-        <ResultCard product={product} />
+      {prod ? prod.map((product, i) => (
+        <ResultCard product={product} key={i} />
       )) : <h1>Not Found</h1>}
     </div>
   );

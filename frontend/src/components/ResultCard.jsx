@@ -10,8 +10,8 @@ function ResultCard({ product }) {
       </div>
       <p className="info-description">{product.description}</p>
       <div className="flex">
-        <p className="info-name">{product?.companyId?.name}</p>
-        <a href={product.companyId.url} className="info-cta">
+        <p className="info-name">{product?.companyId.name ? product.companyId?.name : product?.company?.name}</p>
+        <a href={product.companyId.url ? product.companyId.url : product?.company?.url} className="info-cta">
           {product.CTA}
         </a>
       </div>
