@@ -177,39 +177,12 @@ function addDataToDB() {
   Company.insertMany(comp);
 }
 
-// insert ads with respective companies
-// function addCompaniesWithAds() {
-//   // add a company, get its id, add a ad with that id
-//   allCompanies.map((company, i) => {
-//     const newCompany = new Company({
-//       name: company.name,
-//       url: company.url,
-//     });
-//     newCompany.save();
-//     const companyId = newCompany._id;
-//     const ad = new Ads({
-//       companyId: companyId,
-//       primaryText: allAds[i].primaryText,
-//       headline: allAds[i].headline,
-//       description: allAds[i].description,
-//       CTA: allAds[i].CTA,
-//       imageUrl: allAds[i].imageUrl,
-//     });
-//     ad.save();
-//   });
-// }
-
 // get all the ads with the keyword
 app.post("/post", async (req, res) => {
   // addDataToDB();
   const str = req.body.str;
-  // if(!str){
-  //     res.status(400).json({message:"Please enter a keyword"});
-  //     // res.send("Please enter a valid keyword");
-  //     return;
-  // }
 
-  // search the ads and then populate them with the companyId 
+  // search the ads and then populate them with the companyId
   const ads = await Ads.find({
     $or: [
       { primaryText: { $regex: str, $options: "i" } },
@@ -220,8 +193,7 @@ app.post("/post", async (req, res) => {
     .populate("companyId")
     .exec();
 
-
-    // search the company name and then wind back to the ads
+  // search the company name and then wind back to the ads
 
   const cmp = await Ads.aggregate([
     {
@@ -244,16 +216,13 @@ app.post("/post", async (req, res) => {
 
   // console.log(cmp);
 
-  // if the keyword is found in the company and also in ads, then rerun the query to get the ads with that company
-  // else append the company to the ads array
+  // if the company found by name isn't in the ads array, then we'll push it to the ads array
   if (cmp.length > 0) {
     cmp[0].companyId = cmp[0].company;
     delete cmp[0].company;
-    // console.log(ads.includes(cmp[0]));
     if (!ads.some((a) => a._id.equals(cmp[0]._id))) {
       ads.push(cmp[0]);
     }
   }
-  // console.log(ads);
   res.status(200).send(ads);
 });
