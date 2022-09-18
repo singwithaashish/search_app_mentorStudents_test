@@ -247,7 +247,10 @@ app.post("/post", async (req, res) => {
   // if the keyword is found in the company and also in ads, then rerun the query to get the ads with that company
   // else append the company to the ads array
   if (cmp.length > 0) {
-    if (!ads.some((a) => a._id.equals(cmp[0]._id)) && cmp.length > 0) {
+    cmp[0].companyId = cmp[0].company;
+    delete cmp[0].company;
+    // console.log(ads.includes(cmp[0]));
+    if (!ads.some((a) => a._id.equals(cmp[0]._id))) {
       ads.push(cmp[0]);
     }
   }
